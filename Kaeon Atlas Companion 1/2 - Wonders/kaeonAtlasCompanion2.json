@@ -1,0 +1,15 @@
+{
+	"use": {
+		"entities": {
+			"kaeonAtlasCompanion2": {
+				"components": {
+					"META": {
+						"environment": "javascript",
+						"type": "library"
+					}
+				},
+				"entities": {}
+			}
+		}
+	}
+}
