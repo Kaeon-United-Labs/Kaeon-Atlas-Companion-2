@@ -8,7 +8,34 @@
 						"type": "library"
 					}
 				},
-				"entities": {}
+				"entities": {
+					"external": {
+						"entities": {
+							"aether": {
+								"entities": {
+									"aetherUtils": {
+										"components": {
+											"locations": [
+												"https://raw.githubusercontent.com/Kaeon-United-Labs/Kaeon-Atlas-Companion-1/refs/heads/main/Kaeon%20Atlas%20Companion%201/2%20-%20Wonders/1%20-%20External/1%20-%20Axis/1%20-%20Aether/1%20-%20Utils/aetherUtils.js"
+											]
+										}
+									},
+									"axisModules": {
+										"entities": {
+											"axisAetherCore": {
+												"components": {
+													"locations": [
+														"https://raw.githubusercontent.com/Kaeon-United-Labs/Kaeon-Atlas-Companion-1/refs/heads/main/Kaeon%20Atlas%20Companion%201/2%20-%20Wonders/1%20-%20External/1%20-%20Axis/1%20-%20Aether/axisAetherCore.js"
+													]
+												}
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				}
 			}
 		}
 	}
