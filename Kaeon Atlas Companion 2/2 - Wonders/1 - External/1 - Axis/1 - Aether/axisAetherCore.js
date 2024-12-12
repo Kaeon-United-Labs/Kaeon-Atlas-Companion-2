@@ -96,7 +96,7 @@ function axisAetherCore(options) {
 				return response;
 			},
 			state: state,
-			tags: ["axis", "aetherCore"]
+			tags: ["axis", "aether", "core"]
 		}
 	);
 
