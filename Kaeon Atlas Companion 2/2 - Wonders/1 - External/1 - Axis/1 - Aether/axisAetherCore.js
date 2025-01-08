@@ -8,7 +8,7 @@ function axisAetherCore(options) {
 
 	options = options != null ? options : { };
 
-	let state = null;
+	let state = { };
 
 	try {
 
@@ -20,6 +20,8 @@ function axisAetherCore(options) {
 	catch(error) {
 		state = { };
 	}
+
+	state = aetherUtils.flattenACE(state);
 	
 	let aetherCore = Object.assign(
 		Object.assign({ }, philosophersStone.standard),
@@ -64,21 +66,23 @@ function axisAetherCore(options) {
 					return null;
 				}
 
-				if(!aetherUtils.validateRequest(packet))
-					return null;
+				let flag = false;
 
 				philosophersStone.traverse(philosophersStone.axis).forEach(
 					item => {
 			
 						try {
 
-							item.standard({
-								tags: ["aether", "call"],
+							let status = item.standard({
+								tags: ["aether", "validate"],
 								packet: {
 									call: packet,
 									state: aetherCore.state
 								}
 							});
+
+							if(typeof status == "boolean" && !status)
+								flag = true;
 						}
 			
 						catch(error) {
@@ -87,13 +91,51 @@ function axisAetherCore(options) {
 					}
 				);
 
-				let response = JSON.parse(JSON.stringify(packet));
-				response.priority = 1;
+				if(flag)
+					return null;
 
-				delete response.request;
-				delete response.headers;
+				try {
+					
+					aetherCore.state = Object.assign(
+						aetherCore.state,
+						aetherUtils.flattenACE(
+							aceUtils.formatKaeonACE(packet.body)
+						)
+					);
+				}
 
-				return response;
+				catch(error) {
+					return null;
+				}
+
+				let data = { };
+
+				philosophersStone.traverse(philosophersStone.axis).forEach(
+					item => {
+			
+						try {
+
+							let content = item.standard({
+								tags: ["aether", "call"],
+								packet: {
+									call: packet,
+									state: aetherCore.state
+								}
+							});
+
+							response = Object.assign(data, content);
+						}
+			
+						catch(error) {
+			
+						}
+					}
+				);
+
+				return {
+					body: JSON.stringify(aetherUtils.unflattenACE(data)),
+					priority: 1
+				};
 			},
 			state: state,
 			tags: ["axis", "aether", "core"]

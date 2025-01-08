@@ -1,3 +1,5 @@
+var aceUtils = require("kaeon-united")("aceUtils");
+
 function classifyPacket(packet) {
 
 	if(typeof packet != "object")
@@ -23,6 +25,12 @@ function classifyPacket(packet) {
 				return "call";
 		}
 
+		if(!packet.tags.includes("validate")) {
+
+			if(packet.packet.call != null)
+				return "validate";
+		}
+
 		if(!packet.tags.includes("tick")) {
 
 			if(typeof packet.packet.tick == "number")
@@ -33,14 +41,46 @@ function classifyPacket(packet) {
 	return null;
 }
 
-function validateRequest(packet, permissions) {
+function flattenACE(ace, data, path) {
 
-	// STUB
+	data = data != null ? data : { };
+	path = path != null ? path : ["use"];
 
-	return true;
+	data[path.join(".")] = aceUtils.getValue(ace, "components", { });
+
+	let entities = aceUtils.getValue(ace, "entities", { });
+
+	Object.keys(entities).forEach(key => {
+		flattenACE(entities[key], data, path.concat(key));
+	});
+
+	return data;
+}
+
+function unflattenACE(ace, key) {
+
+	data = { };
+	key = key != null ? key : "use";
+
+	data.components = ace[key];
+	data.entities = { };
+
+	Object.keys(ace).filter(item => {
+
+		return item.startsWith(key) &&
+			item.split(".").length == key.split(".").length + 1;
+	}).forEach(item => {
+
+		let path = item.split(".");
+
+		data.entities[path[path.length - 1]] = unflattenACE(ace, item);
+	});
+
+	return data;
 }
 
 module.exports = {
 	classifyPacket,
-	validateRequest
+	flattenACE,
+	unflattenACE
 };
