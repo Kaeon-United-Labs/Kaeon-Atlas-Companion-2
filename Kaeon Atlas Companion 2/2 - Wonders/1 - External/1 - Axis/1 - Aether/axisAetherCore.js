@@ -95,13 +95,19 @@ function axisAetherCore(options) {
 					return null;
 
 				try {
-					
-					aetherCore.state = Object.assign(
-						aetherCore.state,
-						aetherUtils.flattenACE(
-							aceUtils.formatKaeonACE(packet.body)
-						)
+
+					let items = aetherUtils.flattenACE(
+						aceUtils.formatKaeonACE(packet.body)
 					);
+
+					Object.keys(items).forEach(key => {
+
+						aetherCore.state[key] = Object.assign(
+							aetherCore.state[key] != null ?
+								aetherCore.state[key] : { },
+							items[key]
+						);
+					});
 				}
 
 				catch(error) {
