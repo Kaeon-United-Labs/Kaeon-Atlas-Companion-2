@@ -9,37 +9,94 @@
 
 var philosophersStone = require("kaeon-united")("philosophersStone");
 
-function chat(log) {
+function load(element) {
 
+	let data = philosophersStone.traverse(philosophersStone.axis).map(node => {
+
+		try {
+
+			return node.standard({
+				standard: {
+					type: "META.load",
+					value: element
+				}
+			});
+		}
+
+		catch(error) {
+			return null;
+		}
+	}).flat().filter(
+		item => item != null
+	).filter(
+		item => !item.finished && (busy != null ? !busy.flag : true)
+	);
+
+	let value = { };
+
+	data.forEach(item => {
+
+		if(typeof item.id != "number")
+			return;
+
+		value["" + item.id] = item;
+
+		delete item.id;
+	});
+
+	return value;
 }
 
-function run() {
+function run(interval) {
 
 	/*
 
-		Perpetual w/ callbacks:
-	
-			Get agents from atlas
-			Get tasks from atlas
+		Perpetual:
 
-			Agent: { id#, log[] }
-			Task: { id#, Desc, log[], finished: t/f }
+			Types
 
-			For each agent, rank each task & execute best tasks via atlas.
+				Packet: {
+					standard: {
+						type: "META.[type]",
+						value: (data),
+						: { }
+					}
+				}
 
-			Execute: Get options via atlas, Pass Action to atlas
+				Task: {
+					id#,
+					desc,
+					log[{ time#, note }, ...],
+					busy: { t/f, updateTime# },
+					finished: t/f
+				}
 
-			Option: "Desc"
-			Action: { "Desc", taskID# }
+				Option: { "Desc", optionID# }
+				Action: { optionID#, taskID# }
 
-			Packet: { META: { type: "type", value: (data) } }
+			Process
+
+				Get tasks from atlas
+
+				Rank tasks & Execute best task via atlas.
+
+					Execute
+
+						Get options via atlas,
+						Rank Options,
+						Pass Action to atlas
 	
 	*/
 
-	// return intervals
+	return setInterval(() => {
+
+		let tasks = load("tasks");
+
+		// STUB
+	}, interval != null ? interval * 1000 : 1000);
 }
 
 module.exports = {
-	chat,
+	load,
 	run
 };
