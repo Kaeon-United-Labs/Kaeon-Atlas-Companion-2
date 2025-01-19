@@ -1,4 +1,5 @@
 var aetherUtils = use("kaeon-united")("aetherUtils");
+var metaUtils = use("kaeon-united")("metaUtils");
 var philosophersStone = use("kaeon-united")("philosophersStone");
 
 function onCall(packet) {
@@ -17,6 +18,7 @@ function axisAetherExecute(options) {
 		Object.assign({ }, philosophersStone.standard),
 		{
 			axis: options.axis != null ? options.axis : { },
+			interval: metaUtils.run(),
 			standard: (packet) => {
 
 				let type = aetherUtils.classifyPacket(packet);
