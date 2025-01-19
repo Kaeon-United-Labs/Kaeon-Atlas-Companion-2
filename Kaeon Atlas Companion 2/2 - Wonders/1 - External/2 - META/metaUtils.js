@@ -64,26 +64,32 @@ function run(interval) {
 				}
 
 				Task: {
-					id#,
+					id,
 					desc,
-					log[{ time#, note }, ...],
-					busy: { t/f, updateTime# },
-					finished: t/f
+					log[
+						{
+							type: "note"/"status",
+							time#,
+							note: "note" | status: "open"/"busy"/"finished"
+						},
+						...
+					]
 				}
 
-				Option: { "Desc", optionID# }
-				Action: { optionID#, taskID# }
+				Option: { optionID, "Desc" }
+				Action: { optionID, taskID }
+
+				Priority Item: { Value (Task/Option){ ... }, priority# }
 
 			Process
 
-				Get tasks from atlas
+				Get tasks from atlas -> With priority, Filter neg priority
 
 				Rank tasks & Execute best task via atlas.
 
 					Execute
 
-						Get options via atlas,
-						Rank Options,
+						Get options via atlas -> pass task, get priority
 						Pass Action to atlas
 	
 	*/
