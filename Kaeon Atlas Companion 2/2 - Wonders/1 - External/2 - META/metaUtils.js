@@ -6,7 +6,7 @@ function getTaskNotes(task) {
 
 	for(let i = 0; i < task.log.length; i++) {
 
-		if(task.log[i].type == "notes")
+		if(task.log[i].type == "note")
 			notes.push(task.log[i].value);
 	}
 
@@ -42,69 +42,69 @@ function load(element) {
 	);
 }
 
-function run(interval) {
+function run() {
 
-	return setInterval(() => {
+	// STUB - Rank Priorities (task & option) w/ callback
+	//  Use highest priority
 
-		let tasks = load("tasks").filter(
-			item =>
-				getTaskStatus(item.value) == "open" &&
-				(item.priority != null ? item.priority >= 0 : true)
-		);
+	let tasks = load("tasks").filter(
+		item =>
+			getTaskStatus(item.value) == "open" &&
+			(item.priority != null ? item.priority >= 0 : true)
+	);
 
-		let options = load("options");
+	let options = load("options");
 
-		philosophersStone.traverse(philosophersStone.axis).forEach(node => {
+	philosophersStone.traverse(philosophersStone.axis).forEach(node => {
 
-			tasks.forEach(task => {
+		tasks.forEach(task => {
 
-				let resolved = 0;
+			let resolved = 0;
 
-				[].concat(options).forEach(option => {
+			[].concat(options).forEach(option => {
 
-					option.standard({
-						standard: {
-							type: "prioritize",
-							value: {
-								task: task,
-								callback: priority => {
+				option.standard({
+					standard: {
+						type: "META.prioritize.option",
+						value: {
+							task: task,
+							callback: priority => {
 
-									options.priority =
-										priority != null ? priority : 0;
+								options.priority =
+									priority != null ? priority : 0;
 
-									resolved++;
+								resolved++;
 
-									if(resolved == options.length) {
+								if(resolved == options.length) {
 
-										try {
-											
-											node.standard({
-												standard: {
-													type: `META.action`,
-													value: {
-														task: task,
-														option: options.sort(
-															(a, b) =>
-																b.priority -
-																a.priority
-														)[0].priority
-													}
+									try {
+										
+										node.standard({
+											standard: {
+												type: `META.action`,
+												value: {
+													task: task,
+													option: options.sort(
+														(a, b) =>
+															b.priority -
+															a.priority
+													)[0].priority
 												}
-											});
-										}
-								
-										catch(error) {
-											
-										}
+											}
+										});
+									}
+							
+									catch(error) {
+										
 									}
 								}
 							}
 						}
-					});
+					}
 				});
 			});
 		});
-	}, interval != null ? interval * 1000 : 1000);
+	});
 }
 
 module.exports = {

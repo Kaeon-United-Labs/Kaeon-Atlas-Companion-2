@@ -1,14 +1,6 @@
 var aetherUtils = use("kaeon-united")("aetherUtils");
 var philosophersStone = use("kaeon-united")("philosophersStone");
 
-function onCall(packet) {
-	// STUB - Return State - Traverse other nodes
-}
-
-function onTick(packet) {
-	// STUB - Write State to DB
-}
-
 function axisAetherQuery(options) {
 
 	options = options != null ? options : { };
@@ -32,6 +24,14 @@ function axisAetherQuery(options) {
 	);
 
 	return aetherQuery;
+}
+
+function onCall(packet) {
+	// STUB - Return State - Traverse other nodes
+}
+
+function onTick(packet) {
+	// STUB - Write State to DB
 }
 
 module.exports = {

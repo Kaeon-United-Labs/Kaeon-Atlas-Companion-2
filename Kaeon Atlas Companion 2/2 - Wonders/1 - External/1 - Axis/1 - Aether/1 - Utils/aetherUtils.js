@@ -1,5 +1,43 @@
 var aceUtils = require("kaeon-united")("aceUtils");
 
+function connectModules(package) {
+
+	use("kaeon-united")("aceUtils").traceKaeonACE(
+		use("kaeon-united")(),
+		[
+			{
+				alias: package
+			},
+			{
+				components: {
+					type: { library: { } },
+					environment: { javascript: { } }
+				},
+				filter: (item) => {
+
+					return item.components.locations != null ||
+						item.components.source != null;
+				}
+			}
+		]
+	).map(item => {
+
+		if(item.components.source == null)
+			return use(Object.keys(item.components.locations)[0]);
+
+		else
+			return use(item.components.source, { dynamic: true });
+	}).forEach(item => {
+		
+		philosophersStone.connect(
+			philosophersStone.axis,
+			item.axisModule(options),
+			[],
+			true
+		);
+	});
+}
+
 function classifyPacket(packet) {
 
 	if(typeof packet != "object")
@@ -172,6 +210,7 @@ function unflattenACE(ace, key) {
 }
 
 module.exports = {
+	connectModules,
 	classifyPacket,
 	flattenACE,
 	getDistance,

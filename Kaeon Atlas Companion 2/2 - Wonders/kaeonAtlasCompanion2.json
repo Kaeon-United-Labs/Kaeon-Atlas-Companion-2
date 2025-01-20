@@ -53,7 +53,10 @@
 								}
 							},
 							"META": {
-								"axisAetherQuery": {
+								"metaModules": {
+									
+								},
+								"metaUtils": {
 									"locations": [
 										"https://raw.githubusercontent.com/Kaeon-United-Labs/Kaeon-Atlas-Companion-2/refs/heads/main/Kaeon%20Atlas%20Companion%202/2%20-%20Wonders/1%20-%20External/2%20-%20META/metaUtils.js"
 									]

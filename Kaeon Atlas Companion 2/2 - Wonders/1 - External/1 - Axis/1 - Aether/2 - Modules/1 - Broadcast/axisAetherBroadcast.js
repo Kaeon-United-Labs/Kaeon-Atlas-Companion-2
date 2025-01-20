@@ -1,24 +1,6 @@
 var aetherUtils = use("kaeon-united")("aetherUtils");
 var philosophersStone = use("kaeon-united")("philosophersStone");
 
-function onTick(packet) {
-
-	let state = packet.state;
-
-	this.timer = this.timer != null ? this.timer : (new Date()).getTime();
-	
-	// STUB - Get and Integrate Update components every tick
-	//  - Traverse other nodes
-
-	if((new Date()).getTime() - this.timer >= module.interval * 1000) {
-
-		// STUB - Send update to all connections every special interval
-		//  - Traverse other nodes
-
-		this.timer = (new Date()).getTime();
-	}
-}
-
 function axisAetherBroadcast(options) {
 
 	options = options != null ? options : { };
@@ -39,6 +21,24 @@ function axisAetherBroadcast(options) {
 	);
 
 	return aetherBroadcast;
+}
+
+function onTick(packet) {
+
+	let state = packet.state;
+
+	this.timer = this.timer != null ? this.timer : (new Date()).getTime();
+	
+	// STUB - Get and Integrate Update components every tick
+	//  - Traverse other nodes
+
+	if((new Date()).getTime() - this.timer >= module.interval * 1000) {
+
+		// STUB - Send update to all connections every special interval
+		//  - Traverse other nodes
+
+		this.timer = (new Date()).getTime();
+	}
 }
 
 module.exports = {
