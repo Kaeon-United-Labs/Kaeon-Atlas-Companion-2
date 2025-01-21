@@ -1,13 +1,28 @@
 var philosophersStone = require("kaeon-united")("philosophersStone");
 
+function getLogTask(task) {
+
+	return Object.keys(task.log).map(key => {
+
+		let item = Object.assign({ }, task.log[key]);
+
+		delete item[key];
+		item.value = key;
+
+		return item;
+	});
+}
+
 function getTaskNotes(task) {
+
+	let log = getLogTask(task);
 
 	let notes = [];
 
-	for(let i = 0; i < task.log.length; i++) {
+	for(let i = 0; i < log.length; i++) {
 
-		if(task.log[i].type == "note")
-			notes.push(task.log[i].value);
+		if(log[i].type == "note")
+			notes.push(log[i].value);
 	}
 
 	return notes;
@@ -15,15 +30,30 @@ function getTaskNotes(task) {
 
 function getTaskStatus(task) {
 
+	let log = getLogTask(task);
+
 	let status = "open";
 
-	for(let i = 0; i < task.log.length; i++) {
+	for(let i = 0; i < log.length; i++) {
 
-		if(task.log[i].type == "status" && status != "finished")
-			status = task.log[i].value;
+		if(log[i].type == "status" && status != "finished")
+			status = log[i].value;
 	}
 
 	return status;
+}
+
+function getTaskPriority(task) {
+
+	let log = getLogTask(task);
+
+	for(let i = log.length; i >= 0; i--) {
+
+		if(log[i].type == "priority")
+			return Number(log[i].value);
+	}
+
+	return 0;
 }
 
 function load(element) {
@@ -44,18 +74,40 @@ function load(element) {
 
 function run() {
 
-	// STUB - Rank Priorities (task & option) w/ callback
-	//  Use highest priority
+	let nodes = philosophersStone.traverse(philosophersStone.axis);
 
 	let tasks = load("tasks").filter(
-		item =>
-			getTaskStatus(item.value) == "open" &&
-			(item.priority != null ? item.priority >= 0 : true)
+		item => {
+
+			if(item.priority == null) {
+
+				nodes.forEach(node => {
+
+					try {
+
+						node.standard({
+							standard: {
+								type: "META.prioritize.task",
+								value: item
+							}
+						});
+					}
+
+					catch(error) {
+
+					}
+				});
+
+				return;
+			}
+
+			return getTaskStatus(item.value) == "open" && item.priority >= 0;
+		}
 	);
 
 	let options = load("options");
 
-	philosophersStone.traverse(philosophersStone.axis).forEach(node => {
+	nodes.forEach(node => {
 
 		tasks.forEach(task => {
 
@@ -108,8 +160,10 @@ function run() {
 }
 
 module.exports = {
+	getLogTask,
 	getTaskNotes,
 	getTaskStatus,
+	getTaskPriority,
 	load,
 	run
 };
