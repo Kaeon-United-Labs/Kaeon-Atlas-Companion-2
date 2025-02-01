@@ -32,19 +32,25 @@
 											"modules": {
 												"entities": {
 													"axisAetherBroadcast": {
-														"locations": [
-															"https://raw.githubusercontent.com/Kaeon-United-Labs/Kaeon-Atlas-Companion-2/refs/heads/main/Kaeon%20Atlas%20Companion%202/2%20-%20Wonders/1%20-%20External/1%20-%20Axis/1%20-%20Aether/2%20-%20Modules/1%20-%20Broadcast/axisAetherBroadcast.js"
-														]
+														"components": {
+															"locations": [
+																"https://raw.githubusercontent.com/Kaeon-United-Labs/Kaeon-Atlas-Companion-2/refs/heads/main/Kaeon%20Atlas%20Companion%202/2%20-%20Wonders/1%20-%20External/1%20-%20Axis/1%20-%20Aether/2%20-%20Modules/1%20-%20Broadcast/axisAetherBroadcast.js"
+															]
+														}
 													},
 													"axisAetherExecute": {
-														"locations": [
-															"https://raw.githubusercontent.com/Kaeon-United-Labs/Kaeon-Atlas-Companion-2/refs/heads/main/Kaeon%20Atlas%20Companion%202/2%20-%20Wonders/1%20-%20External/1%20-%20Axis/1%20-%20Aether/2%20-%20Modules/2%20-%20Execute/axisAetherExecute.js"
-														]
+														"components": {
+															"locations": [
+																"https://raw.githubusercontent.com/Kaeon-United-Labs/Kaeon-Atlas-Companion-2/refs/heads/main/Kaeon%20Atlas%20Companion%202/2%20-%20Wonders/1%20-%20External/1%20-%20Axis/1%20-%20Aether/2%20-%20Modules/2%20-%20Execute/axisAetherExecute.js"
+															]
+														}
 													},
 													"axisAetherQuery": {
-														"locations": [
-															"https://raw.githubusercontent.com/Kaeon-United-Labs/Kaeon-Atlas-Companion-2/refs/heads/main/Kaeon%20Atlas%20Companion%202/2%20-%20Wonders/1%20-%20External/1%20-%20Axis/1%20-%20Aether/2%20-%20Modules/3%20-%20Query/axisAetherQuery.js"
-														]
+														"components": {
+															"locations": [
+																"https://raw.githubusercontent.com/Kaeon-United-Labs/Kaeon-Atlas-Companion-2/refs/heads/main/Kaeon%20Atlas%20Companion%202/2%20-%20Wonders/1%20-%20External/1%20-%20Axis/1%20-%20Aether/2%20-%20Modules/3%20-%20Query/axisAetherQuery.js"
+															]
+														}
 													}
 												}
 											}
@@ -57,9 +63,11 @@
 									
 								},
 								"metaUtils": {
-									"locations": [
-										"https://raw.githubusercontent.com/Kaeon-United-Labs/Kaeon-Atlas-Companion-2/refs/heads/main/Kaeon%20Atlas%20Companion%202/2%20-%20Wonders/1%20-%20External/2%20-%20META/metaUtils.js"
-									]
+									"components": {
+										"locations": [
+											"https://raw.githubusercontent.com/Kaeon-United-Labs/Kaeon-Atlas-Companion-2/refs/heads/main/Kaeon%20Atlas%20Companion%202/2%20-%20Wonders/1%20-%20External/2%20-%20META/metaUtils.js"
+										]
+									}
 								}
 							}
 						}
